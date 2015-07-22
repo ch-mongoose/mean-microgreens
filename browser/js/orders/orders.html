@@ -1,8 +1,8 @@
 <section class="container" id='orders'>
 	<div id="orders-page">
-
-		<div><h3>Based on your most recent order, it seems that you like {{ randomMicro }}</h3></div>
-		<div><h3>We would recommend you try {{ recommendedBlend.name }}!</h3></div>
+		<div ng-show="!showRecommendation"><h3>Looks like you haven't placed an order recently!</h3></div>
+		<div ng-show="showRecommendation"><h3>Based on your most recent order, it seems that you like {{ randomMicro }}</h3></div>
+		<div ng-show="showRecommendation"><h3>We would recommend you try {{ recommendedBlend.name }}!</h3></div>
 
 	<div class='row'>
 		<div>
