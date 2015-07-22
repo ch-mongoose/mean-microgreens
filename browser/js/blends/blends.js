@@ -78,7 +78,8 @@ app.controller('BlendsController', function ($scope, BlendsFactory, MicrosFactor
             // BlendsFactory.getAllBlends().then(function (blends) {
             //     $scope.allBlends = blends;
             // });   
-        });
+        })
+
     };
     $scope.deleteBlend = function (id){
         BlendsFactory.deleteBlendById(id).then(function(){
