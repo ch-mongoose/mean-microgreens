@@ -68,16 +68,12 @@ app.controller('BlendsController', function ($scope, BlendsFactory, MicrosFactor
         );
         blend.micros = justIds;
         BlendsFactory.createBlend(blend).then(function (newBlend){
-            $scope.newBlend = {
-                name: null,
-                micros: [],
-                price: null
-                };
-            CartFactory.saveCart(newBlend.name, newBlend);
+            var newBlendwithQuantity = newBlend;
+            var quant = {quantity: 1};
+            _.merge(newBlendwithQuantity, quant);
+            $scope.newBlend = newBlendwithQuantity;
+            CartFactory.saveCart($scope.newBlend.name, $scope.newBlend);
             $scope.showAllBlends();
-            // BlendsFactory.getAllBlends().then(function (blends) {
-            //     $scope.allBlends = blends;
-            // });   
         })
 
     };
