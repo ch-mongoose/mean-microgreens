@@ -8,16 +8,20 @@ app.directive('review', function(ReviewsFactory, BlendsFactory, AuthService) {
         },
         link: function(scope) {
 
-            AuthService.getLoggedInUser().then(function (currUser){
+            scope.creatingReview = {
+                rating: null,
+                comment: null
+            };
+
+            AuthService.getLoggedInUser()
+            .then(function (currUser){
                 scope.userId = currUser._id;
             });
 
             scope.showReviews = function () {
-             console.log("blend is ", scope.blend);
-              BlendsFactory.getBlendById(scope.blend._id).then(function(blend){
-                console.log("blend reviews are ", blend);
+              BlendsFactory.getBlendById(scope.blend._id)
+              .then(function(blend){
                 scope.revArr = blend.reviews;
-                //console.log("got reviews!");
               });
             };
 
@@ -30,19 +34,20 @@ app.directive('review', function(ReviewsFactory, BlendsFactory, AuthService) {
                     blend: scope.blend._id,
                     user: scope.userId
                 };
-                
-                ReviewsFactory.createReview(newReview).then(function(review) {
-                  console.log('YAYYYY! NEW REVIEW CREATED!', review._id);
-                  
+                ReviewsFactory.createReview(newReview)
+                .then(function(review) {                  
                   scope.blend.reviews = scope.blend.reviews.map(function(review){return review._id;});
                   scope.blend.reviews.push(review._id);
-                  console.log("with new id", scope.blend);
                   BlendsFactory.editBlendById(scope.blend._id, {reviews: scope.blend.reviews});
-                }).then(function(){
+                })
+                .then(function(){
                   scope.showReviews();
                 });
-
+                scope.creatingReview.rating = null;
+                scope.creatingReview.comment = null;
             };
+
+            
         }
     };
 });
